@@ -1,10 +1,4 @@
-# NOTES — [Numele tău]
-
-Copiază acest fișier ca `NOTES.md` și completează-l.
-
-Vrem să fie scurt — maxim 1 pagină. Mai mult contează claritatea decât lungimea.
-
----
+# NOTES — Ioo Paula-Antonia
 
 ## 1. Bug-urile găsite
 
