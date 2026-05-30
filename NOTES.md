@@ -5,18 +5,18 @@
 Pentru fiecare bug, scrie 2-3 propoziții:
 
 ### Bug #1
-- **Unde era:** (fișier + linie aprox)
-- **Cum l-am găsit:** (test care pica? citire de cod? logs?)
+- **Unde era:** `POST /events` in fisierul `app/main.py`
+- **Cum l-am găsit:** am rulat `python -m pytest -v`, si a picat testul `test_create_event_returns_201`; returneaza `200 OK` in loc de `201 Created`, cum ar fi normal
 - **Cum l-am fixat:**
 
 ### Bug #2
-- **Unde era:**
-- **Cum l-am găsit:**
+- **Unde era:** functia `list_events` in fisierul `app/storage.py`
+- **Cum l-am găsit:** am rulat `python -m pytest -v` si au picat: `test_list_events_includes_created_items` si `test_list_events_paginates_without_overlap`; returneaza mai putine evenimente decat ar fi trebuit si ceva nu e in regula nici la paginare
 - **Cum l-am fixat:**
 
 ### Bug #3
-- **Unde era:**
-- **Cum l-am găsit:**
+- **Unde era:** functiile `list_events`, `soft_delete_event` in fisierul `app/storage.py`
+- **Cum l-am găsit:** am rulat `python -m pytest -v` si au picat: `test_list_events_hides_soft_deleted_items`, `test_delete_same_event_twice_changes_response` si `test_pagination_after_delete_stays_consistent`; acelasi event sters de doua ori => `204`, desi nu ar fi trebuit + chiar daca s-au sters, ele apareau in lista inca
 - **Cum l-am fixat:**
 
 ---
