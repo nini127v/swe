@@ -28,8 +28,8 @@ def get_user(user_id: int) -> User:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-
-@app.post("/events", response_model=Event)
+# probleme la endpoint
+@app.post("/events", response_model=Event, status_code=201)
 def create_event(data: EventCreate) -> Event:
     user = storage.get_user(data.user_id)
     if user is None:
