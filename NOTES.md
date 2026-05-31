@@ -40,12 +40,12 @@ Fii cinstit. Nu pierzi puncte dacă spui adevărul, dimpotrivă.
 
 ---
 
-## 4. Ce-ai face cu mai mult timp
+## 4. Ce-as face cu mai mult timp
 
-- as face o analiza mai detaliata a componentelor si a responsabilitatilor lor, dincolo de ce era necesar pentru task
-- as separa mai clar functiile in functie de responsabilitatea lor, daca proiectul ar creste
-- as incerca sa reutilizez logica unde se poate, ca sa evit duplicarea
-- as adauga teste si pentru cazuri mai speciale, de exemplu date invalide la `since`
+- as separa mai clar responsabilitatile dintre `main.py` si `storage.py`, ca endpoint-urile sa ramana doar cu partea de API
+- as adauga un storage mai apropiat de o aplicatie reala, de exemplu o baza de date, nu doar dictionare in memorie
+- as mai adauga teste pentru cazuri limita, cum ar fi user fara events, `since` invalid sau events sterse combinate cu filtrarea
+- as incerca sa refolosesc logica de filtrare, ca sa nu se repete aceleasi conditii in mai multe locuri
 
 ---
 
