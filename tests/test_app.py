@@ -172,3 +172,75 @@ def test_pagination_after_delete_stays_consistent(client, user):
     assert len(page1_ids) == 3
     assert len(page2_ids) == 2
     assert set(page1_ids).isdisjoint(page2_ids), "Pages should not overlap"
+
+
+def test_list_user_events(client, user):
+    new_user_response = client.post(
+        "/users", json={"email": "paula@gmail.com", "name": "Paula"}
+    )
+    assert new_user_response.status_code == 201
+    new_user = new_user_response.json()
+
+    first_event_response = client.post(
+        "/events",
+        json={"user_id": user["id"], "event_type": "login", "metadata": {}},
+    )
+    second_event_response = client.post(
+        "/events",
+        json={"user_id": user["id"], "event_type": "page_view", "metadata": {}},
+    )
+
+    client.post(
+        "/events",
+        json={"user_id": new_user["id"], "event_type": "login", "metadata": {}},
+    )
+
+    response = client.get(f"/users/{user['id']}/events")
+    assert response.status_code == 200
+    events = response.json()
+    event_ids = {event["id"] for event in events}
+    assert len(events) == 2
+    assert event_ids == {
+        first_event_response.json()["id"],
+        second_event_response.json()["id"],
+    }
+
+
+def test_list_user_events_with_since(client, user):
+    first_event_response = client.post(
+        "/events",
+        json={"user_id": user["id"], "event_type": "login", "metadata": {}},
+    )
+
+    second_event_response = client.post(
+        "/events",
+        json={"user_id": user["id"], "event_type": "page_view", "metadata": {}},
+    )
+
+    since = first_event_response.json()["created_at"]
+    response = client.get(f"/users/{user['id']}/events?since={since}")
+    assert response.status_code == 200
+
+    events = response.json()
+    assert len(events) == 1
+    assert events[0]["id"] == second_event_response.json()["id"]
+
+
+def test_list_user_events_unknown_user_returns_404(client):
+    response = client.get("/users/9999/events")
+    assert response.status_code == 404
+
+
+def test_list_user_events_hides_deleted_events(client, user):
+    event_response = client.post(
+        "/events",
+        json={"user_id": user["id"], "event_type": "click", "metadata": {}},
+    )
+    event_id = event_response.json()["id"]
+
+    delete_response = client.delete(f"/events/{event_id}")
+    assert delete_response.status_code == 204
+
+    response = client.get(f"/users/{user['id']}/events")
+    assert response.status_code == 200
+    assert response.json() == []

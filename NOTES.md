@@ -2,8 +2,6 @@
 
 ## 1. Bug-urile găsite
 
-Pentru fiecare bug, scrie 2-3 propoziții:
-
 ### Bug #1
 - **Unde era:** `POST /events` in fisierul `app/main.py`
 - **Cum l-am găsit:** am rulat `py -m pytest -v`, si a picat testul `test_create_event_returns_201`; returneaza `200 OK` in loc de `201 Created`, cum ar fi normal
@@ -23,9 +21,9 @@ Pentru fiecare bug, scrie 2-3 propoziții:
 
 ## 2. Endpoint-ul nou
 
-- **Decizii de design:** (ce-ai considerat? ce ai ales și de ce?)
-- **Cazuri edge pe care le-ai acoperit:**
-- **Teste adăugate:** (ce verifică fiecare)
+- **Decizii de design:** am adaugat endpoint-ul `GET /users/{user_id}/events` in `main.py` si functia `list_user_events` in `storage.py`, ca filtrarea events sa ramana in storage; `since` este optional si l-am pus ca `datetime | None`, ca FastAPI sa poata parsa data ISO
+- **Cazuri edge pe care le-ai acoperit:** events pentru mai multi useri, filtrarea dupa `since`, user inexistent care trebuie sa dea `404` si events sterse care nu trebuie sa mai apara
+- **Teste adăugate:** `test_list_user_events` verifica events doar pentru userul cerut; `test_list_user_events_with_since` verifica filtrarea dupa data; `test_list_user_events_unknown_user_returns_404` verifica user inexistent; `test_list_user_events_hides_deleted_events` verifica events sterse
 
 ---
 

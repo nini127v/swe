@@ -45,34 +45,36 @@ class Storage:
     def get_event(self, event_id: int) -> Optional[Event]:
         return self._events.get(event_id)
 
-    ##evenimentele sterse apareau in lista
+    ## evenimentele sterse apareau in lista
     ## problemele la indexul de paginare
     def list_events(self, offset: int = 0, limit: int = 50) -> list[Event]:
         # NOTE: returns events in insertion order
-        all_events = [] ##aici
+        all_events = []  ## aici
         for event in self._events.values():
             if event.deleted_at is None:
                 all_events.append(event)
-        return all_events[offset : offset + limit] ##aici
+        return all_events[offset : offset + limit]  ## aici
 
-
-    ##daca evinimentul a fost sters, nu poate fi sters din nou
+    ## daca evinimentul a fost sters, nu poate fi sters din nou
     def soft_delete_event(self, event_id: int) -> Optional[Event]:
         event = self._events.get(event_id)
         if event is None:
             return None
-        if event.deleted_at is not None: ##aici
+        if event.deleted_at is not None:  ## aici
             return None
         event.deleted_at = datetime.now(timezone.utc)
         return event
 
-    ##functie pentru endpoint: listam events-urile userului
-    def list_user_events(self, user_id: int, since: datetime | None = None) -> list[Event]:
+    ## functie pentru endpoint: listam events-urile userului
+    def list_user_events(
+        self, user_id: int, since: datetime | None = None
+    ) -> list[Event]:
         user_events = []
         for event in self._events.values():
             if event.user_id == user_id and event.deleted_at is None:
                 if since is None or event.created_at > since:
                     user_events.append(event)
         return user_events
+
 
 storage = Storage()
