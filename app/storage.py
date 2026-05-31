@@ -66,5 +66,13 @@ class Storage:
         event.deleted_at = datetime.now(timezone.utc)
         return event
 
+    ##functie pentru endpoint: listam events-urile userului
+    def list_user_events(self, user_id: int, since: datetime | None = None) -> list[Event]:
+        user_events = []
+        for event in self._events.values():
+            if event.user_id == user_id and event.deleted_at is None:
+                if since is None or event.created_at > since:
+                    user_events.append(event)
+        return user_events
 
 storage = Storage()
