@@ -31,21 +31,25 @@
 
 Fii cinstit. Nu pierzi puncte dacă spui adevărul, dimpotrivă.
 
-- **Ce ai folosit:** (ChatGPT / Cursor / Copilot / altele)
-- **Prompturi reprezentative folosite:** (scrie prompturile pe care le consideri relevante + context scurt: la ce te-au ajutat)
-- **Unde te-a ajutat cel mai mult:**
-- **Unde te-a încurcat sau ți-a dat un răspuns greșit:** (foarte interesant pentru noi!)
-- **Cum ai verificat ce-a generat:**
-- **Anexă opțională — export chat:** (dacă vrei, poți adăuga un export de chat relevant)
+- **Ce ai folosit:** Codex
+- **Prompturi reprezentative folosite:** `te rog explica-mi concret de ce pica urmatoarele teste?`; `am adaugat endpoint-ul, ti se pare in regula structura? ce ar mai trebui/modificat/adaugat?`; `ma gandeam sa testam ca atunci cand cer events pentru un user, nu se afiseaza events ale altui user; si sa verificam si cazul in care userul nu exista, ce ar mai trebui in afara de asta?`; `vreau ca testele sa fie in acelasi stil cu cele existente`
+- **Unde te-a ajutat cel mai mult:** la debugging, sa inteleg de ce picau testele si unde era problema in cod; m-a ajutat mult si la teste, ca sa pastrez structura cat mai asemanatoare cu testele existente si sa ma gandesc la cazuri edge
+- **Unde te-a încurcat sau ți-a dat un răspuns greșit:** uneori a propus idei/formulari care nu erau chiar in stilul meu sau nu urmau exact ce voiam eu; au fost si momente in care parea ca halucineaza sau nu gandea corect ideea pe care i-o explicam, asa ca am verificat si am ajustat manual
+- **Cum ai verificat ce-a generat:** am rulat `py -m pytest -v` dupa schimbari si am verificat manual endpoint-ul in `/docs`, incercand sa introduc date si sa vad raspunsurile
+- **Anexă opțională — export chat:** -
 
 ---
 
 ## 4. Ce-ai face cu mai mult timp
 
-(Lista scurtă, 3-5 puncte. Arată-ne că ai văzut limitele actuale.)
+- as face o analiza mai atenta a codului si a componentelor, ca sa inteleg mai bine cum se leaga intre ele
+- as separa mai clar functiile in functie de responsabilitatea lor, daca proiectul ar creste
+- as incerca sa reutilizez logica unde se poate, ca sa evit duplicarea
+- as adauga teste si pentru cazuri mai speciale, de exemplu date invalide la `since`
 
 ---
 
 ## 5. Întrebări / observații
 
-(Orice nu a fost clar, orice ai vrea să discuți cu noi.)
+- nu consider ca a fost un task greu de inteles, doar ca la prima vedere a trebuit sa citesc mai atent codul, mai ales pentru ca nu era scris de mine de la zero
+- in rest, cerintele mi s-au parut clare si implementabile
