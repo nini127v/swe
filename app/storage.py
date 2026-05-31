@@ -45,14 +45,23 @@ class Storage:
     def get_event(self, event_id: int) -> Optional[Event]:
         return self._events.get(event_id)
 
+    ##evenimentele sterse apareau in lista
+    ## problemele la indexul de paginare
     def list_events(self, offset: int = 0, limit: int = 50) -> list[Event]:
         # NOTE: returns events in insertion order
-        all_events = list(self._events.values())
-        return all_events[offset + 1 : offset + 1 + limit]
+        all_events = [] ##aici
+        for event in self._events.values():
+            if event.deleted_at is None:
+                all_events.append(event)
+        return all_events[offset : offset + limit] ##aici
 
+
+    ##daca evinimentul a fost sters, nu poate fi sters din nou
     def soft_delete_event(self, event_id: int) -> Optional[Event]:
         event = self._events.get(event_id)
         if event is None:
+            return None
+        if event.deleted_at is not None: ##aici
             return None
         event.deleted_at = datetime.now(timezone.utc)
         return event
